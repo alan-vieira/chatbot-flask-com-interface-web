@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="chat-container">
+            <h1>Kitt ChatBot</h1>
+            <div id="chatbox" class="chatbox">
+                <div class="message botText">
+                    <span class="character"><strong>Kitt:</strong></span> Oi! Eu sou Kitt.
+                </div>
+            </div>
+            <div id="userInput" class="userInput">
+                <input id="text" type="text" name="msg" placeholder="Message" class="form-control">
+                <button type="button" id="send" class="btn btn-warning">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            function sendMessage() {
+                var rawText = $("#text").val();
+                var userHtml = '<div class="message userText"><span class="character"><strong>Usuário:</strong></span> ' + rawText + "</div>";
+                $("#text").val("");
+                $("#chatbox").append(userHtml);
+                $("#chatbox").scrollTop($("#chatbox")[0].scrollHeight);
+                $.ajax({
+                    data: {
+                        msg: rawText,
+                    },
+                    type: "POST",
+                    url: "/get",
+                }).done(function(data) {
+                    var botHtml = '<div class="message botText"><span class="character"><strong>Kitt:</strong></span> ' + data + "</div>";
+                    $("#chatbox").append($.parseHTML(botHtml));
+                    $("#chatbox").scrollTop($("#chatbox")[0].scrollHeight);
+                });
+            }
+
+            $("#send").on("click", function(event) {
+                sendMessage();
+                event.preventDefault();
+            });
+
+            $("#text").keypress(function(event) {
+                if (event.which === 13) {
+                    sendMessage();
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
