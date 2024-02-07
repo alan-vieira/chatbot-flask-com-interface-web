@@ -1,10 +1,10 @@
 # Chatbot Flask com Interface Web
 
-Este é um simples chatbot desenvolvido usando Flask para o backend e uma interface web para interação.
+Este projeto consiste em um chatbot desenvolvido utilizando o framework Flask para o backend e uma interface web para interação. A aplicação utiliza a biblioteca ChatterBot para criar um assistente de conversação simples, capaz de responder a perguntas comuns dos usuários.
 
 ## Visão Geral
 
-Este projeto utiliza a biblioteca ChatterBot para criar um ChatBot simples.
+O objetivo deste projeto é fornecer uma plataforma de chat interativa que permita aos usuários obter respostas para suas perguntas de forma rápida e eficiente. O chatbot é treinado para lidar com uma variedade de consultas relacionadas a um determinado tópico ou domínio específico.
 
 ## Estrutura de Pastas
 
