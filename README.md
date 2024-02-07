@@ -30,16 +30,30 @@ chatbot-flask-com-interface-web/
 Antes de começar, você deve ter as seguintes dependências instaladas:
 
 - Python 3.8
-- Flask
-- ChatterBot
+
+### Ambiente virtualizado com Anaconda
+
+Após ter instalado o pacote Anconda crie a ative o ambiente com os comandos:
+
+- Crie o ambiente virtual com python 3.8
+```bash
+conda create -n chatbot_conda python=3.8
+```
+
+- Ative o ambiente virtual
+```bash
+conda activate chatbot_conda
+```
+
+- desative o ambiente virtual
+```bash
+conda deactivate
+```
 
 Certifique-se de ter essas dependências instaladas no seu ambiente de desenvolvimento. Você pode instalá-las executando:
 
-```python
-pip install -r requirements.txt
-```
-
 ## Configuração
+
 
 1. Clone o repositório:
 
@@ -48,7 +62,48 @@ git clone https://github.com/seu-usuario/chatbot-flask-com-interface-web.git
 cd chatbot-flask-com-interface-web
 ```
 
-2. Execute o aplicativo Flask:
+2. Instale as dependências usando o pip:
+
+```bash
+pip install -r requirements.txt
+```
+
+## Modificação no arquivo `compat.py` da biblioteca SQLAlchemy
+
+Ao utilizar a biblioteca SQLAlchemy em conjunto com o sistema operacional Windows ou Jython, foi identificado um possível problema relacionado à função `time.clock` na linha 264 do arquivo `compat.py`.
+
+### Problema Identificado
+
+No código original:
+
+  ```python
+  if win32 or jython:
+      time_func = time.clock
+  else:
+      time_func = time.time
+  ```
+
+A função time.clock é utilizada, porém, em algumas situações específicas, essa abordagem pode levar a problemas.
+
+### Solução Aplicada
+
+A seguinte modificação foi realizada para evitar possíveis complicações:
+
+  ```python
+  if win32 or jython:
+    #time_func = time.clock
+    pass
+  else:
+    time_func = time.time
+  ```
+
+Essa alteração evita o uso da função `time.clock` e opta por manter o código compatível em ambientes Windows e Jython.
+
+Nota: Modificar diretamente o código de bibliotecas pode ter implicações. Recomenda-se monitorar as atualizações da biblioteca e verificar se o problema foi abordado nas versões mais recentes.
+
+## Como Usar
+
+Execute o aplicativo Flask:
 
 ```python
 python chatbot.py
